@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class VM_crearcuenta extends JFrame {
 
@@ -31,16 +32,20 @@ public class VM_crearcuenta extends JFrame {
 	private JPasswordField passwordField;
 	private JTextField textField_Nombre;
 	private JTextField textField_Usuario;
-	private JTextField textField_Apellido;
+	private JTextField textField_ApellidoPaterno;
 	private JLabel Label_Aviso;
 	private String data_Usuario;
 	private String data_Password;
 	private String data_Nombre;
 	private String data_Apellido;
+	private JTextField textField_ApellidoMaterno;
+	private JTextField textField_Nombre_Visible;
+	private JTextField textField_SPregunta;
+	private JTextField textField_SRespuesta;
 
 	public VM_crearcuenta() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 392, 269);
+		setBounds(100, 100, 420, 410);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -48,39 +53,39 @@ public class VM_crearcuenta extends JFrame {
 		grupoderadios = new ButtonGroup();
 		
 		JLabel lblNombreDeCuenta = new JLabel("Nombre de cuenta");
-		lblNombreDeCuenta.setBounds(22, 114, 96, 14);
+		lblNombreDeCuenta.setBounds(22, 145, 96, 14);
 		contentPane.add(lblNombreDeCuenta);
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(22, 33, 46, 14);
 		contentPane.add(lblNombre);
 		
-		JLabel lblApellido = new JLabel("Apellido");
-		lblApellido.setBounds(22, 58, 46, 14);
-		contentPane.add(lblApellido);
+		JLabel lblApellidoPaterno = new JLabel("Apellido Paterno");
+		lblApellidoPaterno.setBounds(22, 58, 82, 14);
+		contentPane.add(lblApellidoPaterno);
 		
 		JLabel lblContrasea = new JLabel("Contraseña");
-		lblContrasea.setBounds(22, 150, 66, 14);
+		lblContrasea.setBounds(22, 217, 66, 14);
 		contentPane.add(lblContrasea);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(118, 147, 135, 20);
+		passwordField.setBounds(128, 214, 145, 20);
 		contentPane.add(passwordField);
 		
 		textField_Nombre = new JTextField();
-		textField_Nombre.setBounds(78, 30, 121, 20);
+		textField_Nombre.setBounds(103, 30, 155, 20);
 		contentPane.add(textField_Nombre);
 		textField_Nombre.setColumns(10);
 		
 		textField_Usuario = new JTextField();
-		textField_Usuario.setBounds(118, 111, 135, 20);
+		textField_Usuario.setBounds(128, 142, 145, 20);
 		contentPane.add(textField_Usuario);
 		textField_Usuario.setColumns(10);
 		
-		textField_Apellido = new JTextField();
-		textField_Apellido.setBounds(78, 55, 121, 20);
-		contentPane.add(textField_Apellido);
-		textField_Apellido.setColumns(10);
+		textField_ApellidoPaterno = new JTextField();
+		textField_ApellidoPaterno.setBounds(103, 55, 155, 20);
+		contentPane.add(textField_ApellidoPaterno);
+		textField_ApellidoPaterno.setColumns(10);
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
@@ -88,34 +93,95 @@ public class VM_crearcuenta extends JFrame {
 				guardar();
 			}
 		});
-		btnAceptar.setBounds(278, 196, 89, 23);
+		btnAceptar.setBounds(305, 339, 89, 23);
 		contentPane.add(btnAceptar);
 		
 		JRadioButton rdbtnAdmin = new JRadioButton("Admin");
 		rdbtnAdmin.setEnabled(AccessAdmin);
 		rdbtnAdmin.setSelected(false);
-		rdbtnAdmin.setBounds(258, 29, 109, 23);
+		rdbtnAdmin.setBounds(292, 54, 109, 23);
 		contentPane.add(rdbtnAdmin);
 		
 		JRadioButton rdbtnVisitante = new JRadioButton("Visitante");
 		rdbtnVisitante.setSelected(true);
-		rdbtnVisitante.setBounds(258, 64, 109, 23);
+		rdbtnVisitante.setBounds(292, 79, 109, 23);
 		contentPane.add(rdbtnVisitante);
 		
 		grupoderadios.add(rdbtnAdmin);
 		grupoderadios.add(rdbtnVisitante);
 		
 	    Label_Aviso = new JLabel("");
-		Label_Aviso.setBounds(10, 196, 155, 23);
+	    Label_Aviso.setFont(new Font("Times New Roman", Font.PLAIN, 11));
+		Label_Aviso.setBounds(22, 339, 262, 23);
 		Label_Aviso.setText("");
 		contentPane.add(Label_Aviso);
+		
+		JLabel lblTipo = new JLabel("Tipo de cuenta");
+		lblTipo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTipo.setBounds(292, 33, 89, 14);
+		contentPane.add(lblTipo);
+		
+		JLabel lblApellidoMaterno = new JLabel("Apellido Materno");
+		lblApellidoMaterno.setBounds(22, 83, 82, 14);
+		contentPane.add(lblApellidoMaterno);
+		
+		textField_ApellidoMaterno = new JTextField();
+		textField_ApellidoMaterno.setBounds(103, 80, 155, 20);
+		contentPane.add(textField_ApellidoMaterno);
+		textField_ApellidoMaterno.setColumns(10);
+		
+		JLabel lblDatosPersonales = new JLabel("Datos Personales");
+		lblDatosPersonales.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblDatosPersonales.setBounds(22, 8, 109, 14);
+		contentPane.add(lblDatosPersonales);
+		
+		JLabel lblDatosDeCuenta = new JLabel("Datos de cuenta");
+		lblDatosDeCuenta.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblDatosDeCuenta.setBounds(22, 120, 96, 14);
+		contentPane.add(lblDatosDeCuenta);
+		
+		JLabel lblApodo = new JLabel("Nombre Visible");
+		lblApodo.setBounds(22, 181, 74, 14);
+		contentPane.add(lblApodo);
+		
+		textField_Nombre_Visible = new JTextField();
+		textField_Nombre_Visible.setBounds(128, 178, 145, 20);
+		contentPane.add(textField_Nombre_Visible);
+		textField_Nombre_Visible.setColumns(10);
+		
+		JLabel lblPreguntaDeSeguridad = new JLabel("Pregunta de seguridad");
+		lblPreguntaDeSeguridad.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblPreguntaDeSeguridad.setBounds(22, 255, 133, 14);
+		contentPane.add(lblPreguntaDeSeguridad);
+		
+		JLabel lblPregunta = new JLabel("Pregunta");
+		lblPregunta.setBounds(22, 280, 66, 14);
+		contentPane.add(lblPregunta);
+		
+		JLabel lblRespuesta = new JLabel("Respuesta");
+		lblRespuesta.setBounds(22, 314, 66, 14);
+		contentPane.add(lblRespuesta);
+		
+		textField_SPregunta = new JTextField();
+		textField_SPregunta.setBounds(91, 277, 182, 20);
+		contentPane.add(textField_SPregunta);
+		textField_SPregunta.setColumns(10);
+		
+		textField_SRespuesta = new JTextField();
+		textField_SRespuesta.setBounds(91, 311, 182, 20);
+		contentPane.add(textField_SRespuesta);
+		textField_SRespuesta.setColumns(10);
 	}
 	public void guardar() {
 		String ruta = "src/cuentas/" + textField_Usuario.getText();
 		data_Usuario="String Usuario =" + textField_Usuario.getText();
 		data_Password="String Password =" + passwordField.getText();
 		data_Nombre="String Nombre =" + textField_Nombre.getText();
-		data_Apellido="String Apellido =" + textField_Apellido.getText();
+		data_Apellido="String Apellido_Paterno =" + textField_ApellidoPaterno.getText();
+		data_Apellido="String Apellido_Materno =" + textField_ApellidoMaterno.getText();
+		data_Apellido="String Nombre_Visible =" + textField_Nombre_Visible.getText();
+		data_Apellido="String Pregunta =" + textField_SPregunta.getText();
+		data_Apellido="String Respuesta =" + textField_SRespuesta.getText();
 		FileWriter gr;	
 		File ex = new File(ruta);
 		if (!(ex.exists())) {
