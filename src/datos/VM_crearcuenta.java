@@ -1,8 +1,6 @@
 package datos;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.io.FileReader;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedWriter;
@@ -14,9 +12,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
@@ -37,7 +33,11 @@ public class VM_crearcuenta extends JFrame {
 	private String data_Usuario;
 	private String data_Password;
 	private String data_Nombre;
-	private String data_Apellido;
+	private String data_ApellidoP;
+	private String data_ApellidoM;
+	private String data_Question;
+	private String data_Answer;
+	private String data_Nombre_Vsb;
 	private JTextField textField_ApellidoMaterno;
 	private JTextField textField_Nombre_Visible;
 	private JTextField textField_SPregunta;
@@ -76,16 +76,19 @@ public class VM_crearcuenta extends JFrame {
 		textField_Nombre.setBounds(103, 30, 155, 20);
 		contentPane.add(textField_Nombre);
 		textField_Nombre.setColumns(10);
+		textField_Nombre.setText(textField_Nombre.getText().toLowerCase());
 		
 		textField_Usuario = new JTextField();
 		textField_Usuario.setBounds(128, 142, 145, 20);
 		contentPane.add(textField_Usuario);
 		textField_Usuario.setColumns(10);
+		textField_Usuario.setText(textField_Usuario.getText().toLowerCase());
 		
 		textField_ApellidoPaterno = new JTextField();
 		textField_ApellidoPaterno.setBounds(103, 55, 155, 20);
 		contentPane.add(textField_ApellidoPaterno);
 		textField_ApellidoPaterno.setColumns(10);
+		textField_ApellidoPaterno.setText(textField_ApellidoPaterno.getText().toLowerCase());
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
@@ -129,6 +132,7 @@ public class VM_crearcuenta extends JFrame {
 		textField_ApellidoMaterno.setBounds(103, 80, 155, 20);
 		contentPane.add(textField_ApellidoMaterno);
 		textField_ApellidoMaterno.setColumns(10);
+		textField_ApellidoMaterno.setText(textField_ApellidoMaterno.getText().toLowerCase());
 		
 		JLabel lblDatosPersonales = new JLabel("Datos Personales");
 		lblDatosPersonales.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -148,6 +152,7 @@ public class VM_crearcuenta extends JFrame {
 		textField_Nombre_Visible.setBounds(128, 178, 145, 20);
 		contentPane.add(textField_Nombre_Visible);
 		textField_Nombre_Visible.setColumns(10);
+		textField_Nombre_Visible.setText(textField_Nombre_Visible.getText().toLowerCase());
 		
 		JLabel lblPreguntaDeSeguridad = new JLabel("Pregunta de seguridad");
 		lblPreguntaDeSeguridad.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -166,22 +171,24 @@ public class VM_crearcuenta extends JFrame {
 		textField_SPregunta.setBounds(91, 277, 182, 20);
 		contentPane.add(textField_SPregunta);
 		textField_SPregunta.setColumns(10);
+		textField_SPregunta.setText(textField_SPregunta.getText().toLowerCase());
 		
 		textField_SRespuesta = new JTextField();
 		textField_SRespuesta.setBounds(91, 311, 182, 20);
 		contentPane.add(textField_SRespuesta);
 		textField_SRespuesta.setColumns(10);
+		textField_SRespuesta.setText(textField_SRespuesta.getText().toLowerCase());
 	}
 	public void guardar() {
 		String ruta = "src/cuentas/" + textField_Usuario.getText();
-		data_Usuario="String Usuario =" + textField_Usuario.getText();
-		data_Password="String Password =" + passwordField.getText();
-		data_Nombre="String Nombre =" + textField_Nombre.getText();
-		data_Apellido="String Apellido_Paterno =" + textField_ApellidoPaterno.getText();
-		data_Apellido="String Apellido_Materno =" + textField_ApellidoMaterno.getText();
-		data_Apellido="String Nombre_Visible =" + textField_Nombre_Visible.getText();
-		data_Apellido="String Pregunta =" + textField_SPregunta.getText();
-		data_Apellido="String Respuesta =" + textField_SRespuesta.getText();
+		data_Usuario="Usu_Account=" + textField_Usuario.getText();
+		data_Password="Pass_Account=" + passwordField.getText();
+		data_Nombre="Nombre_Data=" + textField_Nombre.getText();
+		data_ApellidoP="ApellidoP_Data =" + textField_ApellidoPaterno.getText();
+		data_ApellidoM="ApellidoM_Data =" + textField_ApellidoMaterno.getText();
+		data_Nombre_Vsb="NV_Data =" + textField_Nombre_Visible.getText();
+		data_Question="Question_Segurity =" + textField_SPregunta.getText();
+		data_Answer="Answer_Segurity =" + textField_SRespuesta.getText();
 		FileWriter gr;	
 		File ex = new File(ruta);
 		if (!(ex.exists())) {
@@ -196,7 +203,15 @@ public class VM_crearcuenta extends JFrame {
 		            grabar.newLine();
 		            grabar.write(data_Nombre);
 		            grabar.newLine();
-		            grabar.write(data_Apellido);
+		            grabar.write(data_ApellidoP);
+		            grabar.newLine();
+		            grabar.write(data_ApellidoM);
+		            grabar.newLine();
+		            grabar.write(data_Nombre_Vsb);
+		            grabar.newLine();
+		            grabar.write(data_Question);
+		            grabar.newLine();
+		            grabar.write(data_Answer);
 		            grabar.newLine();
 		            grabar.close();
 		            Label_Aviso.setText("Guardado exictosamente");

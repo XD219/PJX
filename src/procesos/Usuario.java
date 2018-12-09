@@ -1,14 +1,16 @@
 package procesos;
 
+import javax.swing.JPasswordField;
+
 public class Usuario {
     private String Usuario;
 	private String Nombre;
+	private String NV;
 	private String ApellidoM;
 	private String ApellidoP;
 	private String Password;
 	private String Question;
 	private String Answer;
-
 	public Usuario() {
 	}
 	//get...
@@ -33,6 +35,9 @@ public class Usuario {
 	public String getAnswer_segurity() {
 		return Answer;
 	}
+	public String getNV() {
+		return NV;
+	}
 	//set...
 	public void setUsuario(String Usu) {
 		this.Usuario=Usu;
@@ -55,4 +60,8 @@ public class Usuario {
 	public void setAnswer_segurity(String Ans) {
 		this.Answer=Ans;
 	}
+	public void setNV(String Nv) {
+		this.NV=Nv;
+	}
+
 }
