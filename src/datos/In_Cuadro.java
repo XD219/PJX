@@ -3,8 +3,9 @@ package datos;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.print.PrinterException;
+import java.io.File;
 import java.text.MessageFormat;
-
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,10 +16,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import procesos.SaveData_Cuadro;
+import procesos.LoadData_Cuadro;
 
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
@@ -44,9 +47,13 @@ import javax.swing.JToggleButton;
 import javax.swing.JRadioButton;
 import java.awt.Font;
 import javax.swing.JPasswordField;
+import javax.swing.ButtonGroup;
 
 public class In_Cuadro extends JFrame {
 	
+	private JLabel Label_Path = new JLabel("");
+	private JFileChooser sa = new JFileChooser();
+	private File archivo;
 	private int S_Colum=8;
 	private int S_Filas=41;
 	private JLabel Label_Prueba;
@@ -59,6 +66,8 @@ public class In_Cuadro extends JFrame {
 	private JTable table;
 	private DefaultTableModel TModel;
 	private JPasswordField passwordField;
+	int n=1;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -91,10 +100,30 @@ public class In_Cuadro extends JFrame {
 		menuBar.add(mnArchivo);
 		
 		JMenuItem mntmNuevo = new JMenuItem("Nuevo");
+		mntmNuevo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Nuevo();
+			}
+		});
 		mntmNuevo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.ALT_MASK));
 		mnArchivo.add(mntmNuevo);
 		
 		JMenuItem mntmAbrir = new JMenuItem("Abrir");
+		mntmAbrir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sa.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				int resultado=sa.showOpenDialog(mntmAbrir);
+				archivo=sa.getSelectedFile();
+				if (resultado!=JFileChooser.CANCEL_OPTION){
+					LoadData_Cuadro k= new LoadData_Cuadro();
+					Label_Path.setText(archivo.getAbsolutePath());
+					k.Cargando_datos(archivo.getAbsolutePath());
+					table.setModel(k.Carga);
+				}else {
+					JOptionPane.showMessageDialog(null, "Cancelado", "Mensaje", JOptionPane.YES_OPTION);
+				}
+			}
+		});
 		mntmAbrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.ALT_MASK));
 		mnArchivo.add(mntmAbrir);
 		
@@ -215,6 +244,7 @@ public class In_Cuadro extends JFrame {
 		
 		textField_NLista = new JTextField();
 		textField_NLista.setBounds(22, 24, 107, 20);
+		textField_NLista.setText("SinNombre");
 		panel_OpBasico.add(textField_NLista);
 		textField_NLista.setColumns(10);
 		
@@ -236,9 +266,9 @@ public class In_Cuadro extends JFrame {
 		lblFilas.setBounds(10, 89, 46, 14);
 		panel_OpBasico.add(lblFilas);
 		
-		JLabel lblColor = new JLabel("Color:");
-		lblColor.setBounds(10, 144, 46, 14);
-		panel_OpBasico.add(lblColor);
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(0, 186, 153, 14);
+		panel_OpBasico.add(separator_1);
 		
 		JPanel panel_OpAvanzando = new JPanel();
 		panel_OpAvanzando.setBounds(10, 222, 153, 411);
@@ -269,15 +299,44 @@ public class In_Cuadro extends JFrame {
 		passwordField.setBounds(23, 95, 107, 23);
 		panel_OpAvanzando.add(passwordField);
 		
-		JButton btnImportar = new JButton("Importar");
-		btnImportar.setEnabled(false);
-		btnImportar.setBounds(33, 129, 82, 23);
-		panel_OpAvanzando.add(btnImportar);
+		JSeparator separator = new JSeparator();
+		separator.setBounds(0, 129, 153, 14);
+		panel_OpAvanzando.add(separator);
 		
-		JButton btnExportar = new JButton("Exportar");
-		btnExportar.setEnabled(false);
-		btnExportar.setBounds(33, 163, 82, 23);
-		panel_OpAvanzando.add(btnExportar);
+		JLabel lblMarcosbordes = new JLabel("Marcos-Bordes");
+		lblMarcosbordes.setBounds(10, 142, 100, 14);
+		panel_OpAvanzando.add(lblMarcosbordes);
+		
+		JRadioButton rdbtnNormal = new JRadioButton("Normal");
+		buttonGroup.add(rdbtnNormal);
+		rdbtnNormal.setSelected(true);
+		rdbtnNormal.setBounds(6, 163, 109, 23);
+		panel_OpAvanzando.add(rdbtnNormal);
+		rdbtnNormal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent o) {
+				if (o.getSource()==rdbtnNormal) {
+					table.setShowHorizontalLines(true);
+					table.setShowVerticalLines(true);
+				}
+			}
+		});
+		
+		JRadioButton rdbtnPersonalizado = new JRadioButton("Personalizado");
+		buttonGroup.add(rdbtnPersonalizado);
+		rdbtnPersonalizado.setBounds(6, 189, 109, 23);
+		panel_OpAvanzando.add(rdbtnPersonalizado);
+		
+		Label_Path.setBounds(589, 678, 421, 14);
+		contentPane.add(Label_Path);
+		rdbtnPersonalizado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent o) {
+				if (o.getSource()==rdbtnPersonalizado) {
+					table.setShowHorizontalLines(false);
+					table.setShowVerticalLines(false);
+				}
+			}
+		});
+		
 		com_Filas_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent o) {
 				if (o.getSource()==com_Filas_1) {
@@ -429,15 +488,48 @@ public class In_Cuadro extends JFrame {
 	    }
 	}
 	public void JTable_Tam() {	
+		DefaultTableModel modelo = (DefaultTableModel)table.getModel();
+		//sumar columnas
+		if (S_Colum>table.getColumnCount()) {
+			Object T_Filas[]=new Object [S_Filas];
+			for (int l=table.getColumnCount(); l<S_Colum; l++) {
+				modelo.addColumn(T_Filas);
+			}
+		}
+		//restar filas
+		if (S_Filas<table.getRowCount()) {
+			for(int l=table.getRowCount()-1; l>=S_Filas; l--) {
+				modelo.removeRow(l); 
+			}
+		}
+		//sumar fila
+		if (S_Filas>table.getRowCount()) {
+			Object T_Colum[]=new Object [S_Colum];
+			for (int l=table.getRowCount(); l<S_Filas; l++) {
+				modelo.addRow(T_Colum);
+			}
+		}
+		//restar columnas
+		if (S_Colum<table.getColumnCount()) {
+			for(int l=table.getColumnCount()-1; l>=S_Colum; l--) {
+				table.removeColumn (table.getColumnModel().getColumn(l));
+			}
+		}
+
+	}
+	public void ProcessSave() {
+		table.selectAll();
+		SaveData_Cuadro Guardar= new SaveData_Cuadro();
+		Guardar.setNombreT(textField_NLista.getText());
+		Guardar.GuardarTable(table.getModel(), S_Colum, S_Filas);
+	}
+	public void Nuevo() {
 		Columnas=new Object[S_Colum];
 		Filas=new Object [S_Filas][S_Colum];
+		textField_NLista.setText("SinNombre" + n);
 
 		TModel= new DefaultTableModel(Filas, Columnas);
 		table.setModel(TModel);	
-	}
-	public void ProcessSave() {
-		SaveData_Cuadro Guardar= new SaveData_Cuadro();
-		Guardar.setNombreT(textField_NLista.getText());
-		Guardar.GuardarTable(table.getModel());
+		n++;
 	}
 }
